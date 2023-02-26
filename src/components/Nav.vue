@@ -36,10 +36,10 @@
           Customers
         </a>
       </li>
-      <li @click="logout">
+      <li @click="logout" >
         <a href="#" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          Logout
+          {{ name }}
         </a>
       </li>
     </ul>
@@ -61,27 +61,33 @@
 </template>
 
 <script>
-import {useStore} from "vuex";
-import {computed} from "vue";
+import { useAuthStore } from '../store/index.js'
+import {useRouter} from "vue-router";
+import {ref} from "vue";
+
 
 export default {
   name: "Nav",
   setup(){
-    const store = useStore();
-    const auth = computed(() => store.state.authenticated)
+    const router = useRouter();
+    const store = useAuthStore()
+    // const auth = store.user
+
+    const name = ref(store.user.name);
+
     const logout = async () => {
         await fetch('http://localhost:8000/api/logout', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           credentials: 'include',
         })
-        // await router.push('/');
+
+        await store.logout()
+        await router.push('/login');
       };
 
-
-
     return{
-      auth,
+      name,
       logout
     }
   }

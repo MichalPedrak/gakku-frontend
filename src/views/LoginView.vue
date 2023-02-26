@@ -29,6 +29,7 @@
   import {reactive} from "vue";
   import axios from "axios";
   import {useRouter} from "vue-router";
+  import { useAuthStore } from '../store/index.js'
 
   export default {
     name: "Login",
@@ -48,7 +49,7 @@
     // };
 
     const router = useRouter();
-
+    const store = useAuthStore()
 //     const submit = async () => {
 //     axios.defaults.withCredentials = true;
 //     await axios
@@ -60,13 +61,26 @@
 // }
 
     const submit = async () => {
-      await fetch('http://localhost:8000/api/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'include',
-        body: JSON.stringify(data)
-      })
-      await router.push('/');
+      try{
+          await fetch('http://localhost:8000/api/login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          credentials: 'include',
+          body: JSON.stringify(data)
+        })
+
+        const response = await fetch('http://localhost:8000/api/user', {
+          headers: {'Content-Type': 'application/json'},
+          credentials: 'include',
+        });
+        // console.log(await response.json())
+        store.login(await response.json());
+
+        await router.push('/');
+
+      } catch (e){
+        console.log(e)
+      }
     };
 
 

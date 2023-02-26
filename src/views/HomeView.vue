@@ -4,8 +4,10 @@
 
 
 <script>
-import {onMounted, ref} from "vue";
-import {useStore} from "vuex";
+import {computed, onMounted, ref} from "vue";
+import {useRouter} from "vue-router";
+import {useAuthStore} from "../store/index.js";
+
 
 export default {
   name: "Home",
@@ -13,23 +15,16 @@ export default {
   setup(){
 
     const message = ref('You are not logged in!')
-    const store = useStore();
+    const store = useAuthStore()
+    const auth = store.user
+    const router = useRouter();
+
+    // if(!computed(() => store.state.authenticated)) return router.push('/login');
 
     onMounted(async () => {
-      try{
-        const response = await fetch('http://localhost:8000/api/user', {
-          headers: {'Content-Type': 'application/json'},
-          credentials: 'include',
-        });
 
-        const content = response.json();
 
-        message.value = 'Dzień dobry ' + content.name;
-
-        await store.dispatch('setAuth', true)
-      } catch(e){
-        await store.dispatch('setAuth', false)
-      }
+      // message.value = `Dzień dobry ${auth.name}, ${auth.email}`
 
     });
     return{
@@ -38,3 +33,5 @@ export default {
   },
 }
 </script>
+
+

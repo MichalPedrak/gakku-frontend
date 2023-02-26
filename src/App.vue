@@ -10,6 +10,10 @@
 <script setup>
 import Nav from "./components/Nav.vue";
 import NavAuth from "./components/NavAuth.vue";
+
+
+
+
 </script>
 
 

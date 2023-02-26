@@ -10,7 +10,7 @@
       <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
       <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
       <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">{{  auth   }}</a></li>
 
 
     </ul>
@@ -19,14 +19,17 @@
 </template>
 
 <script>
-import {useStore} from "vuex";
-import {computed} from "vue";
+import { useAuthStore } from '../store/index.js'
+
 
 export default {
   name: "NavAuth",
   setup(){
-    const store = useStore();
-    const auth = computed(() => store.state.authenticated)
+
+    const store = useAuthStore()
+    const auth = store.user;
+
+
     const logout = () => {
       const submit = async () => {
         await fetch('http://localhost:8000/api/logout', {
@@ -34,13 +37,14 @@ export default {
           headers: {'Content-Type': 'application/json'},
           credentials: 'include',
         })
-        // await router.push('/');
+        await store.logout()
+        await router.push('/');
       };
     }
 
     return{
       auth,
-      logout
+      // logout
     }
   }
 }
