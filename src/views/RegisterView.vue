@@ -36,23 +36,34 @@ export default {
   name: "Register",
   setup(){
 
-    let config = {
-      headers:{
-        'X-Api-Key': "JujDB6vFHNoSm0Ycpb6ofQ==5IYG5V2PC1K3lTSS",
-      }
-    };
+    // let config = {
+    //   headers:{
+    //     // 'X-Requested-With': "XMLHttpRequest",
+    //     'Content-Type': 'application/json',
+    //   }
+    // };
 
     const router = useRouter();
 
     const submit = async () => {
-      await axios
-          .post('https://localhost:8000/api/auth/register', JSON.stringify(data), config)
-          .then((response) => {
-            alert(1)
-          })
+      await fetch('http://localhost:8000/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        // credentials: 'include',
+        body: JSON.stringify(data)
+      })
+      await router.push('/login');
+    };
 
-      await router.push('/login')
-    }
+    // const submit = async () => {
+    //   await axios
+    //       .post('http://127.0.0.1:8000/api/register', JSON.stringify(data), config)
+    //       .then((response) => {
+    //
+    //       })
+    //
+    //   await router.push('/login')
+    // }
 
     const data = reactive({
       name: '',

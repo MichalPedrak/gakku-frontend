@@ -1,15 +1,15 @@
 <template>
 
     <div class="d-flex justify-center align-center flex-wrap w-25">
-      <form class="w-100">
+      <form @submit.prevent="submit" class="w-100">
         <h1 class="h3 mb-3 fw-normal">Login in</h1>
 
         <div class="form-floating p-2">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+          <input v-model="data.email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
           <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating p-2">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+          <input v-model="data.password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
           <label for="floatingPassword">Password</label>
         </div>
 
@@ -32,34 +32,49 @@
 
   export default {
     name: "Login",
-  setup(){
 
-  let config = {
-  headers:{
-  'X-Api-Key': "JujDB6vFHNoSm0Ycpb6ofQ==5IYG5V2PC1K3lTSS",
-}
-};
+  setup() {
+    const data = reactive({
+      email: '',
+      password: '',
+    })
 
-  const router = useRouter();
+    // let config = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   // credentials: 'include',
+    //
+    // };
 
-  const submit = async () => {
-  await axios
-  .post('https://localhost:8000/api/auth/login', JSON.stringify(data), config)
-  .then((response) => {
-   alert(1)
-})
+    const router = useRouter();
 
-  await router.push('/')
-}
+//     const submit = async () => {
+//     axios.defaults.withCredentials = true;
+//     await axios
+//     .post('https://localhost:8000/api/login', JSON.stringify(data), config )
+//     .then((response) => {
+//     })
+//
+//   await router.push('/')
+// }
 
-  const data = reactive({
-  name: '',
-  password: '',
-})
-  return {
-  submit,
-  data
-}
-}
-}
+    const submit = async () => {
+      await fetch('http://localhost:8000/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify(data)
+      })
+      await router.push('/');
+    };
+
+
+      return {
+        submit,
+        data
+      }
+    }
+
+  }
 </script>
