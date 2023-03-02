@@ -62,29 +62,44 @@
 
     const submit = async () => {
       try{
-          await fetch('http://localhost:8000/api/login', {
+        const response = await fetch('http://localhost:8000/api/login', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           credentials: 'include',
           body: JSON.stringify(data)
         })
 
-        const response = await fetch('http://localhost:8000/api/user', {
-          headers: {'Content-Type': 'application/json'},
-          credentials: 'include',
-        });
-        // console.log(await response.json())
-        store.login(await response.json());
+        const user = await response.json()
 
+        // await localStorage.setItem('user', JSON.stringify(user.user))
+        await store.login(user.user)
         await router.push('/');
 
       } catch (e){
         console.log(e)
       }
     };
+    // const addToStorage = async () => {
+    //   try{
+    //     const response = await fetch('http://localhost:8000/api/user', {
+    //       headers: {'Content-Type': 'application/json'},
+    //       credentials: 'include',
+    //     });
+    //     const user = await response.json()
+    //     // await localStorage.setItem('user', JSON.stringify(user))
+    //     await store.login(user)
+    //
+    //     await router.push('/');
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // }
+
+
 
 
       return {
+
         submit,
         data
       }

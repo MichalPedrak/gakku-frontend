@@ -9,15 +9,6 @@ import { createPinia} from 'pinia'
 
 const pinia = createPinia()
 
-//
-// watch(
-//     pinia.state,
-//     (state) => {
-//         localStorage.setItem("auth", JSON.stringify(state.autentication));
-//     },
-//     { deep: true }
-// );
-
 
 const app = createApp(App)
 app.use(pinia)

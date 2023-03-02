@@ -7,39 +7,20 @@
     <hr>
     <ul class="w-100 nav nav-pills flex-column mb-auto text-start">
       <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-          Home
-        </a>
+        <router-link class="nav-link text-white" to="/">Panel główny</router-link>
+      </li>
+
+      <li>
+        <router-link class="nav-link text-white" to="/users">Użytkownicy</router-link>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Dashboard
-        </a>
+        <router-link class="nav-link text-white" to="/fiszki">Fiszki</router-link>
       </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          Orders
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          Products
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          Customers
-        </a>
-      </li>
+
       <li @click="logout" >
         <a href="#" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          {{ name }}
+        Wyloguj się
         </a>
       </li>
     </ul>
@@ -47,7 +28,7 @@
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>mdo</strong>
+        <strong>{{ auth.name }}</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
         <RouterLink to="/">Home</RouterLink>
@@ -63,17 +44,19 @@
 <script>
 import { useAuthStore } from '../store/index.js'
 import {useRouter} from "vue-router";
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 
 
 export default {
   name: "Nav",
   setup(){
+
     const router = useRouter();
-    const store = useAuthStore()
+    const store = useAuthStore();
+    const auth = reactive(JSON.parse(store.user))
     // const auth = store.user
 
-    const name = ref(store.user.name);
+    const name = "test"
 
     const logout = async () => {
         await fetch('http://localhost:8000/api/logout', {
@@ -87,6 +70,7 @@ export default {
       };
 
     return{
+      auth,
       name,
       logout
     }

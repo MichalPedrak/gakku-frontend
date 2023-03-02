@@ -29,19 +29,14 @@
 
 <script>
 import {reactive} from "vue";
-import axios from "axios";
+
 import {useRouter} from "vue-router";
 
 export default {
   name: "Register",
   setup(){
 
-    // let config = {
-    //   headers:{
-    //     // 'X-Requested-With': "XMLHttpRequest",
-    //     'Content-Type': 'application/json',
-    //   }
-    // };
+
 
     const router = useRouter();
 

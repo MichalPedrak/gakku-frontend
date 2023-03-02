@@ -4,7 +4,7 @@
 
 
 <script>
-import {computed, onMounted, ref} from "vue";
+import {reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import {useAuthStore} from "../store/index.js";
 
@@ -12,22 +12,19 @@ import {useAuthStore} from "../store/index.js";
 export default {
   name: "Home",
 
-  setup(){
+  setup: function () {
 
     const message = ref('You are not logged in!')
     const store = useAuthStore()
-    const auth = store.user
+    const auth = reactive(JSON.parse(store.user))
     const router = useRouter();
 
-    // if(!computed(() => store.state.authenticated)) return router.push('/login');
 
-    onMounted(async () => {
+    message.value = `Dzień dobry ${auth.name}, to twój główny panel :)`
 
 
-      // message.value = `Dzień dobry ${auth.name}, ${auth.email}`
-
-    });
-    return{
+    return {
+      auth,
       message,
     }
   },

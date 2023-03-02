@@ -10,7 +10,7 @@
       <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
       <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
       <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">{{  auth   }}</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Rejestruj</a></li>
 
 
     </ul>
@@ -20,6 +20,7 @@
 
 <script>
 import { useAuthStore } from '../store/index.js'
+import {reactive} from "vue";
 
 
 export default {
@@ -27,11 +28,11 @@ export default {
   setup(){
 
     const store = useAuthStore()
-    const auth = store.user;
+    const auth = reactive(JSON.parse(store.user))
 
 
-    const logout = () => {
-      const submit = async () => {
+
+      const logout = async () => {
         await fetch('http://localhost:8000/api/logout', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -40,7 +41,7 @@ export default {
         await store.logout()
         await router.push('/');
       };
-    }
+
 
     return{
       auth,
