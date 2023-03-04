@@ -56,7 +56,7 @@ export default {
     const auth = reactive(JSON.parse(store.user))
     // const auth = store.user
 
-    const name = "test"
+
 
     const logout = async () => {
         await fetch('http://localhost:8000/api/logout', {

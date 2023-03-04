@@ -80,6 +80,7 @@ button:focus-visible {
 main{
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
@@ -96,4 +97,49 @@ main{
   button {
     background-color: #f9f9f9;
   }
+}
+
+.cards{
+  gap: 10px;
+  display: flex;
+
+  margin: 15px;
+}
+
+
+.normal-card, .edit-card{
+
+  padding: 25px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+
+
+.edit-card input, .edit-card textarea{
+
+  text-align: center;
+  background: aliceblue;
+  flex-basis: 45%;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.normal-card span{
+  position: relative;
+  flex-basis: 45%;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.card-content::before{
+  content: "Pojęcie";
+  padding: 3px;
+  background: white;
+  position: absolute;
+  top: -10px;
+  left: 25px;
+  font-size: 11px;
 }
