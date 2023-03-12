@@ -1,69 +1,127 @@
 <template>
-  <form @submit.prevent="addCard" class="w-50 m-5">
-    <div class="form-outline mb-4">
-      <input v-model="data.title" type="text" id="form6Example3" class="form-control">
-      <label class="form-label" for="form6Example3" style="margin-left: 0px;">Nazwa fiszki</label>
-      <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 97.6px;"></div><div class="form-notch-trailing"></div></div></div>
-
-    <div class="row mb-4">
-      <div class="col">
-        <div class="form-outline">
-          <input v-model="data.content" type="text" id="form6Example1" class="form-control">
-          <label class="form-label" for="form6Example1" style="margin-left: 0px;">Pojęcie</label>
-          <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68.8px;"></div><div class="form-notch-trailing"></div></div></div>
-      </div>
-      <div class="col">
-        <div class="form-outline">
-          <input v-model="data.content_example" type="text" id="form6Example2" class="form-control">
-          <label class="form-label" for="form6Example2" style="margin-left: 0px;">Definicja</label>
-          <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68px;"></div><div class="form-notch-trailing"></div></div></div>
-      </div>
-    </div>
-
-    <div class="row mb-4">
-      <div class="col">
-        <div class="form-outline">
-          <input v-model="data.definition" type="text" id="form6Example1" class="form-control">
-          <label class="form-label" for="form6Example1" style="margin-left: 0px;">Pojęcie przykład</label>
-          <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68.8px;"></div><div class="form-notch-trailing"></div></div></div>
-      </div>
-      <div class="col">
-        <div class="form-outline">
-          <input v-model="data.definition_example" type="text" id="form6Example2" class="form-control">
-          <label class="form-label" for="form6Example2" style="margin-left: 0px;">Pojęcie definicja</label>
-          <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68px;"></div><div class="form-notch-trailing"></div></div></div>
-      </div>
-    </div>
-
-
-    <button type="submit" class="btn btn-primary btn-block mb-4">Dodaj fiszkę</button>
-  </form>
 
   <div class="w-50">
 
+    <form @submit.prevent="addGroup" class="w-50 m-5">
+      <div class="form-outline mb-4">
+        <input v-model="data.title" type="text" id="form6Example3" class="form-control">
+        <label class="form-label" for="form6Example3" style="margin-left: 0px;">Nazwa grupy</label>
+        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 97.6px;"></div><div class="form-notch-trailing"></div></div></div>
 
-    <div class="cards" v-for="card in cards" :key="card.id">
-      <div class="edit-card d-flex flex-wrap w-100"  v-if="editedCardId === card.id">
+      <button type="submit" class="btn btn-primary btn-block mb-4">Dodaj grupe</button>
+    </form>
+
+    <div class="groups" v-for="group in groups" :key="group.id">
+        <h3>{{ group.title }}</h3>
 
 
-        <input name="content" v-model="card.content" />
-        <input v-model="card.content_example" />
-        <textarea v-model="card.definition" />
-        <textarea v-model="card.definition_example" />
-        <button class="btn btn-danger" @click.prevent="toggleEdit">Odrzuć</button>
-        <button type="submit" class="btn btn-success"  @click.prevent="editCard(card)" >Zapisz</button>
+      <form class="w-50 m-5">
+        <div class="form-outline mb-4">
+          <input v-model="data.title" type="text" id="form6Example3" class="form-control">
+          <label class="form-label" for="form6Example3" style="margin-left: 0px;">Nazwa fiszki</label>
+          <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 97.6px;"></div><div class="form-notch-trailing"></div></div></div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              <input v-model="data.content" type="text" id="form6Example1" class="form-control">
+              <label class="form-label" for="form6Example1" style="margin-left: 0px;">Pojęcie</label>
+              <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68.8px;"></div><div class="form-notch-trailing"></div></div></div>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              <input v-model="data.content_example" type="text" id="form6Example2" class="form-control">
+              <label class="form-label" for="form6Example2" style="margin-left: 0px;">Definicja</label>
+              <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68px;"></div><div class="form-notch-trailing"></div></div></div>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              <input v-model="data.definition" type="text" id="form6Example1" class="form-control">
+              <label class="form-label" for="form6Example1" style="margin-left: 0px;">Pojęcie przykład</label>
+              <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68.8px;"></div><div class="form-notch-trailing"></div></div></div>
+          </div>
+          <div class="col">
+            <div class="form-outline">
+              <input v-model="data.definition_example" type="text" id="form6Example2" class="form-control">
+              <label class="form-label" for="form6Example2" style="margin-left: 0px;">Pojęcie definicja</label>
+              <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68px;"></div><div class="form-notch-trailing"></div></div></div>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <div class="form-outline">
+              <input v-model="data.group_id" type="text" id="form6Example1" class="form-control">
+              <label class="form-label" for="form6Example1" style="margin-left: 0px;">Id groupy</label>
+              <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 68.8px;"></div><div class="form-notch-trailing"></div></div></div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mb-4">Dodaj fiszkę</button>
+      </form>
+
+      <button  @click.prevent="showCard(group.id)">Pokaż fiszki</button>
+
+        <div class="cards" v-for="card in group.cards" :key="card['id']" v-show="card['show']">
+          <div>
+
+            <div class="edit-card d-flex flex-wrap w-100"  v-if="editedCardId === card.id">
+
+
+              <input name="content" v-model="card.content" />
+              <input v-model="card.content_example" />
+              <textarea v-model="card.definition" />
+              <textarea v-model="card.definition_example" />
+              <button class="btn btn-danger" @click.prevent="toggleEdit">Odrzuć</button>
+              <button type="submit" class="btn btn-success"  @click.prevent="editCard(card)" >Zapisz</button>
+            </div>
+
+            <div class="normal-card d-flex flex-wrap w-100" v-else>
+              <span class="card-content" @click="clickEdit(card.id)">{{  card.content }}</span>
+              <span @click="clickEdit(card.id)">{{  card.content_example }}</span>
+              <span @click="clickEdit(card.id)">{{  card.definition }}</span>
+              <span @click="clickEdit(card.id)">{{  card.definition_example }}</span>
+              <button class="btn btn-info text-white" @click.prevent="toggleEdit(card.id)">Edytuj</button>
+              <button class="btn btn-danger" @click.prevent="deleteCard(card.id)">Usuń</button>
+            </div>
+
+
+          </div>
+
+
+
+
+
+<!--        <div class="edit-card d-flex flex-wrap w-100"  v-if="editedCardId === card.id">-->
+
+
+<!--          <input name="content" v-model="card.content" />-->
+<!--          <input v-model="card.content_example" />-->
+<!--          <textarea v-model="card.definition" />-->
+<!--          <textarea v-model="card.definition_example" />-->
+<!--          <button class="btn btn-danger" @click.prevent="toggleEdit">Odrzuć</button>-->
+<!--          <button type="submit" class="btn btn-success"  @click.prevent="editCard(card)" >Zapisz</button>-->
+<!--        </div>-->
+
+<!--        <div class="normal-card d-flex flex-wrap w-100" v-else>-->
+<!--          <span class="card-content" @click="clickEdit(card.id)">{{  card.content }}</span>-->
+<!--          <span @click="clickEdit(card.id)">{{  card.content_example }}</span>-->
+<!--          <span @click="clickEdit(card.id)">{{  card.definition }}</span>-->
+<!--          <span @click="clickEdit(card.id)">{{  card.definition_example }}</span>-->
+<!--          <button class="btn btn-info text-white" @click.prevent="toggleEdit(card.id)">Edytuj</button>-->
+<!--          <button class="btn btn-danger" @click.prevent="deleteCard(card.id)">Usuń</button>-->
+<!--        </div>-->
+
       </div>
 
-      <div class="normal-card d-flex flex-wrap w-100" v-else>
-        <span class="card-content" @click="clickEdit(card.id)">{{  card.content }}</span>
-        <span @click="clickEdit(card.id)">{{  card.content_example }}</span>
-        <span @click="clickEdit(card.id)">{{  card.definition }}</span>
-        <span @click="clickEdit(card.id)">{{  card.definition_example }}</span>
-        <button class="btn btn-info text-white" @click.prevent="toggleEdit(card.id)">Edytuj</button>
-        <button class="btn btn-danger" @click.prevent="deleteCard(card.id)">Usuń</button>
-      </div>
+
 
     </div>
+
+
 
   </div>
 
@@ -87,29 +145,71 @@ export default {
 
       title: '',
       content: '',
+      group_id: '',
       content_example: '',
       definition: '',
       definition_example: '',
 
     })
     let cards = ref(null)
+    let groups = ref(null)
     let editedCardId = ref(null)
 
 
 
 
-     const getCards = async () => {
+     const getCards = async (id) => {
 
-       const response = await fetch('http://localhost:8000/api/cards', {
+       const response = await fetch('http://localhost:8000/api/cards/' + id, {
          headers: {'Content-Type': 'application/json'},
          credentials: 'include',
        })
 
-       cards.value = await response.json();
+       return await response.json();
+
+     };
+     const getGroups = async () => {
+
+       const response = await fetch('http://localhost:8000/api/groups', {
+         headers: {'Content-Type': 'application/json'},
+         credentials: 'include',
+       })
+
+       groups.value = await response.json();
+
+       groups.value.forEach(async function(group){
+         group.cards = await getCards(group.id);
+         group.cards['show'] = false;
+       })
+
+
 
      };
 
-     getCards()
+
+     getGroups()
+
+
+
+    const showCard = function(WW){
+      const AA = WW
+        // console.log(groups)
+
+
+      groups.value.forEach(async function(group, AA ){
+        console.log(AA)
+        console.log(group.cards)
+        // if(groups.cards !== undefined){
+        //   if(groups.cards['show'] == AA){
+        //     alert('tak')
+        //   }
+        // }
+
+
+        // console.log( group.cards)
+      })
+
+    }
 
      const addCard = async () => {
 
@@ -181,7 +281,9 @@ export default {
       editedCardId,
       addCard,
       data,
+      groups,
       cards,
+      showCard,
 
 
 
